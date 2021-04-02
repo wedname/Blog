@@ -10,6 +10,7 @@ class Post:
         self.description = description
         self.views_count = 0
         self.current_date = date.today()
+        # self.img = None
 
     def __str__(self):
         return f'{self.id}' \
@@ -75,17 +76,6 @@ class Blog:
 
     def __init__(self):
         self.posts_list = []
-
-    # @property
-    # def posts_list(self):
-    #     return self._posts_list
-    # 
-    # @posts_list.setter
-    # def posts_list(self, value):
-    #     if isinstance(value, list):
-    #         self._posts_list = value
-    #     else:
-    #         raise ValueError('posts_list must be a list')
 
     def add_post(self, author: str, value_name: str, value_description: str) -> object:
         return self.posts_list.append(Post(len(self.posts_list)+1, author, value_name, value_description))
