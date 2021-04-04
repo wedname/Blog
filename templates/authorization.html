@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Authorization</title>
+
+
+
+      <link rel="stylesheet" href="http://localhost:8000{{ url_for('static', filename='assets/css/authorization.css') }}">
+</head>
+
+<body>
+  <h1>Sign in</h1>
+<div id="wrapper">
+	<form id="signin" method="post" action="/authorization" enctype="multipart/form-data">
+		<input type="text" id="user" name="email" placeholder="email" />
+		<input type="password" id="pass" name="password" placeholder="password" />
+		<button type="submit"></button>
+<!--		<p>forgot your password? <a href="#">click here</a></p>-->
+	</form>
+</div>
+
+
+</body>
+</html>

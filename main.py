@@ -41,11 +41,18 @@ import random
 import string
 import os
 from blog import *
+from users import *
 
 app = Flask(__name__)
 
+ath_user = None
+ath = False
+
 blog = Blog()
 articles = blog.posts_list
+
+users = Users('./users.json')
+
 blog.add_post(
     'wedname',
     'First post',
@@ -98,6 +105,64 @@ def create_article():
         return redirect('/')
     else:
         return 'METHOD NOT ALLOWED'
+
+
+@app.route('/create/user', methods=['GET', 'POST'])
+def create_user():
+    if request.method == 'GET':
+        return render_template('create_user.html')
+    elif request.method == 'POST':
+        # image = request.files['article_image']
+        # random_name = ''.join([random.choice(string.digits + string.ascii_letters) for x in range(10)])
+        # img_path = f'static/images/{random_name}.jpg'
+        # image.save(img_path)
+        if request.form['confirm_password'] == request.form['password']:
+            users.create_user(
+                name=request.form['username'],
+                email=request.form['email'],
+                password=request.form['password']
+            )
+            return redirect('/')
+        else:
+            return redirect('/create/user')
+    else:
+        return 'METHOD NOT ALLOWED'
+
+
+@app.route('/authorization', methods=['GET', 'POST'])
+def authorization():
+    global ath_user
+    global ath
+
+    if request.method == 'GET':
+        return render_template('authorization.html')
+    elif request.method == 'POST':
+        if users.search_user(request.form['email']) is not None:
+            user = users.auth_user_id(request.form['email'])
+            if request.form['password'] == users.users[user]['password']:
+                ath_user = user
+                ath = True
+                print('Все норм!')
+                return redirect(f'/user/{ath_user}')
+            print('Не тот пароль!')
+            return redirect('/authorization')
+        else:
+            return redirect('/create/user')
+    else:
+        return 'METHOD NOT ALLOWED'
+
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    return render_template('users.html', users=users.users)
+
+
+@app.route('/user/<int:id>', methods=['GET'])
+def get_user(id):
+    for user in users.users:
+        if user['id'] == id:
+            return render_template('user.html', user=user)
+    abort(418)
 
 
 if __name__ == '__main__':

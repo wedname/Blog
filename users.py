@@ -72,17 +72,24 @@ class User:
             raise ValueError('password не строка')
 
     def __dict__(self):
-        return {}
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'telephone': self.telephone,
+            'password': self.password
+                }
 
 
 class Users:
 
-    def __init__(self):
+    def __init__(self, path_file_name):
         self.users = []
-        self.load()
+        self.path_file_name = path_file_name
+        self.load(path_file_name)
 
     def __del__(self):
-        self.save()
+        self.save(self.path_file_name)
 
     def load(self, path_file_name):
         with open(f"{path_file_name}", "r", encoding="utf-8") as infile:
@@ -94,7 +101,7 @@ class Users:
             infile.write(json.dumps([dict(x) for x in self.users]))
             infile.close()
 
-    def create_student(self, name, email, password):
+    def create_user(self, name, email, password):
         try:
             user = User(name, email, password)
             user.id = len(self.users) + 1
@@ -102,22 +109,39 @@ class Users:
             print(e)
             return False
         if self.search_user(email) is None:
-            self.users.append(user)
-            self.save()
+            self.users.append({
+                'id': user.id,
+                'name': user.name,
+                'email': user.email,
+                'telephone': user.telephone,
+                'password': user.password
+            })
+            self.save(self.path_file_name)
             return True
         else:
-            print("Студент с таким email уже есть!")
+            print("Пользователь с таким email уже есть!")
             return False
 
-    def search_user(self, user_id):
+    def search_user(self, user_email):
         for i in range(len(self.users)):
-            if user_id == self.users[i].id:
+            if user_email == self.users[i]['email']:
                 return i
-        print("Нет такого студента!")
+        return None
+
+    def search_user_id(self, user_id):
+        for i in range(len(self.users)):
+            if user_id == self.users[i]['id']:
+                return i
+        return None
+
+    def auth_user_id(self, email):
+        for i in range(len(self.users)):
+            if email == self.users[i]['email']:
+                return self.users[i]['id']
         return None
 
     def edit_user(self, search_id, name, email, password):
-        user_id = self.search_user(search_id)
+        user_id = self.search_user_id(search_id)
         if user_id is None:
             return False
         user = self.users[user_id]
@@ -127,7 +151,7 @@ class Users:
         return True
 
     def delete_user(self, search_id):
-        user = self.search_user(search_id)
+        user = self.search_user_id(search_id)
         if user is None:
             return False
         self.users.pop(user)

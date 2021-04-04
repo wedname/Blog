@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+</head>
+<body>
+
+{% for user in users %}
+    <div class="user-block">
+<!--        <img src="/{{ user['avatar'] }}" alt="">-->
+        <p>Пользователь: {{ user['name'] }}</p>
+        <p>email: {{ user['email'] }}</p>
+        <p>Телефон: {{ user['phone'] }}</p>
+        <a href="/user/{{ user['id'] }}">Посмотреть пользователя</a>
+    </div>
+{% endfor %}
+
+</body>
+</html>
