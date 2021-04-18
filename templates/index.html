@@ -78,7 +78,7 @@
 			<div id="tags">
 				{% for i in range(articles | length) %}
 					{% for j in range(articles[i].tags | length) %}
-						<a href="/article/{{ articles[i].tags[j] }}">{{ articles[i].tags[j] }}</a>
+						<a href="/article/tag/{{ articles[i].tags[j] }}">{{ articles[i].tags[j] }}</a>
 					{% endfor %}
 				{% endfor %}
 			</div>
@@ -104,7 +104,7 @@
 									<span class="view-count">Number of views: {{ articles[i].views_count }}</span>
 									<p>{{ articles[i].get_short_description() }}</p>
 									{% for j in range(articles[i].tags | length) %}
-											<a href="/article/{{ articles[i].tags[j] }}">{{ articles[i].tags[j] }}</a>
+											<a href="/article/tag/{{ articles[i].tags[j] }}">{{ articles[i].tags[j] }}</a>
 									{% endfor %}
 									<footer class="align-center">
 										<a href="/article/{{ articles[i].id }}" class="button alt">Read More</a>

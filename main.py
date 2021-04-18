@@ -59,7 +59,16 @@ blog.add_post(
     'Hello, guys! It`s my first website with backend! '
     'So, jwhnegipuw hriugropwijfvoiwejpfovj ewpofjerowjfoejfo ijweofjowe '
     'jgowejroi ugfwoief jowejfoi; jwefoijwe ofjowejf',
-    "test_tag second_tag"
+    "test_tag first_post"
+)
+
+blog.add_post(
+    'wedname',
+    'Second post',
+    'Hello, guys! It`s my first website with backend! '
+    'So, jwhnegipuw hriugropwijfvoiwejpfovj ewpofjerowjfoejfo ijweofjowe '
+    'jgowejroi ugfwoief jowejfoi; jwefoijwe ofjowejf',
+    "test_tag second_post"
 )
 
 
@@ -109,16 +118,14 @@ def create_article():
         return 'METHOD NOT ALLOWED'
 
 
-@app.route('/article/tag/<str:tag>', methods=['GET'])
+@app.route('/article/tag/<tag>', methods=['GET'])
 def search_articles_by_tags(tag):
-    if request.method == 'GET':
-        articles_by_tag = []
-        for i in articles:
-            if articles[i].tag == tag:
-                articles_by_tag.append(articles[i])
-        render_template('search_by_tags.html', articles_by_tag=articles_by_tag)
-    else:
-        return 'METHOD NOT ALLOWED'
+    articles_by_tag = []
+    for article in articles:
+        for j in range(len(article.tags)):
+            if article.tags[j] == tag:
+                articles_by_tag.append(article)
+    return render_template('search_by_tags.html', articles_by_tag=articles_by_tag, articles=articles)
 
 
 @app.route('/create/user', methods=['GET', 'POST'])

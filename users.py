@@ -88,9 +88,6 @@ class Users:
         self.path_file_name = path_file_name
         self.load(path_file_name)
 
-    def __del__(self):
-        self.save(self.path_file_name)
-
     def save(self, path_file_name):
         with open(f"{path_file_name}", "w", encoding="utf-8") as infile:
             infile.write(json.dumps([dict(x) for x in self.users]))
@@ -157,3 +154,5 @@ class Users:
         self.users.pop(user)
         return True
 
+    def __del__(self):
+        self.save(self.path_file_name)

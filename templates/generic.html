@@ -43,7 +43,7 @@
 							<p>{{ article.description }}</p>
 
 							{% for j in range(article.tags | length) %}
-								<a href="/article/{{ article.tags[j] }}">{{ article.tags[j] }}</a>
+								<a href="/article/tag/{{ article.tags[j] }}">{{ article.tags[j] }}</a>
 							{% endfor %}
 
 						</div>

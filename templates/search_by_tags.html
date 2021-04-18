@@ -4,7 +4,7 @@
 		<title>Travelers blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="static/assets/css/main.css" />
+		<link rel="stylesheet" href="http://localhost:8000{{ url_for('static', filename='assets/css/main.css') }}" />
 	</head>
 	<body>
 
@@ -25,12 +25,61 @@
 				</ul>
 			</nav>
 
+		<!-- Banner -->
+			<section class="banner full">
+				<article>
+					<img src="http://localhost:8000{{ url_for('static', filename='images/slide01.jpg') }}" alt="" />
+					<div class="inner">
+						<header>
+							<p>A free responsive web site template by <a href="https://templated.co">TEMPLATED</a></p>
+							<h2>Hielo</h2>
+						</header>
+					</div>
+				</article>
+				<article>
+					<img src="http://localhost:8000{{ url_for('static', filename='images/slide02.jpg') }}" alt="" />
+					<div class="inner">
+						<header>
+							<p>Lorem ipsum dolor sit amet nullam feugiat</p>
+							<h2>Magna etiam</h2>
+						</header>
+					</div>
+				</article>
+				<article>
+					<img src="http://localhost:8000{{ url_for('static', filename='images/slide03.jpg') }}"  alt="" />
+					<div class="inner">
+						<header>
+							<p>Sed cursus aliuam veroeros lorem ipsum nullam</p>
+							<h2>Tempus dolor</h2>
+						</header>
+					</div>
+				</article>
+				<article>
+					<img src="http://localhost:8000{{ url_for('static', filename='images/slide04.jpg') }}"  alt="" />
+					<div class="inner">
+						<header>
+							<p>Adipiscing lorem ipsum feugiat sed phasellus consequat</p>
+							<h2>Etiam feugiat</h2>
+						</header>
+					</div>
+				</article>
+				<article>
+					<img src="http://localhost:8000{{ url_for('static', filename='images/slide05.jpg') }}"  alt="" />
+					<div class="inner">
+						<header>
+							<p>Ipsum dolor sed magna veroeros lorem ipsum</p>
+							<h2>Lorem adipiscing</h2>
+						</header>
+					</div>
+				</article>
+			</section>
+
 
 		<section id="search_for_tags">
 			<div id="tags">
 				{% for i in range(articles | length) %}
 					{% for j in range(articles[i].tags | length) %}
-						<a href="/article/{{ articles[i].tags[j] }}">{{ articles[i].tags[j] }}</a>
+						<a href="/article/tag/{{ articles[i].tags[j] }}">{{ articles[i].tags[j] }}</a>
 					{% endfor %}
 				{% endfor %}
 			</div>
@@ -46,7 +95,7 @@
 						<div>
 							<div class="box">
 								<div class="image fit">
-									<img src="static/images/slide01.jpg" alt="" />
+									<img src="http://localhost:8000{{ url_for('static', filename='images/slide01.jpg') }}" alt="" />
 								</div>
 								<div class="content">
 									<header class="align-center">
@@ -56,10 +105,10 @@
 									<span class="view-count">Number of views: {{ articles_by_tag[i].views_count }}</span>
 									<p>{{ articles_by_tag[i].get_short_description() }}</p>
 									{% for j in range(articles_by_tag[i].tags | length) %}
-											<a href="/article/{{ articles[i].tags[j] }}">{{ articles_by_tag[i].tags[j] }}</a>
+											<a href="/article/tag/{{ articles_by_tag[i].tags[j] }}">{{ articles_by_tag[i].tags[j] }}</a>
 									{% endfor %}
 									<footer class="align-center">
-										<a href="/article/{{ articles[i].id }}" class="button alt">Read More</a>
+										<a href="/article/{{ articles_by_tag[i].id }}" class="button alt">Read More</a>
 									</footer>
 								</div>
 							</div>
@@ -88,11 +137,11 @@
 			</footer>
 
 		<!-- Scripts -->
-			<script src="static/assets/js/jquery.min.js"></script>
-			<script src="static/assets/js/jquery.scrollex.min.js"></script>
-			<script src="static/assets/js/skel.min.js"></script>
-			<script src="static/assets/js/util.js"></script>
-			<script src="static/assets/js/main.js"></script>
+			<script src="http://localhost:8000{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="http://localhost:8000{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+			<script src="http://localhost:8000{{ url_for('static', filename='assets/js/skel.min.js') }}"></script>
+			<script src="http://localhost:8000{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="http://localhost:8000{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
 	</body>
 </html>
