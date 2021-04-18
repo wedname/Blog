@@ -58,7 +58,8 @@ blog.add_post(
     'First post',
     'Hello, guys! It`s my first website with backend! '
     'So, jwhnegipuw hriugropwijfvoiwejpfovj ewpofjerowjfoejfo ijweofjowe '
-    'jgowejroi ugfwoief jowejfoi; jwefoijwe ofjowejf'
+    'jgowejroi ugfwoief jowejfoi; jwefoijwe ofjowejf',
+    "test_tag second_tag"
 )
 
 
@@ -100,9 +101,22 @@ def create_article():
         blog.add_post(
             author=request.form['article_author'],
             value_name=request.form['article_title'],
-            value_description=request.form['article_text']
+            value_description=request.form['article_text'],
+            tags=request.form['article_tags']
         )
         return redirect('/')
+    else:
+        return 'METHOD NOT ALLOWED'
+
+
+@app.route('/article/tag/<str:tag>', methods=['GET'])
+def search_articles_by_tags(tag):
+    if request.method == 'GET':
+        articles_by_tag = []
+        for i in articles:
+            if articles[i].tag == tag:
+                articles_by_tag.append(articles[i])
+        render_template('search_by_tags.html', articles_by_tag=articles_by_tag)
     else:
         return 'METHOD NOT ALLOWED'
 

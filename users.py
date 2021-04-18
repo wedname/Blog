@@ -91,14 +91,14 @@ class Users:
     def __del__(self):
         self.save(self.path_file_name)
 
-    def load(self, path_file_name):
-        with open(f"{path_file_name}", "r", encoding="utf-8") as infile:
-            self.users = json.loads(infile.read())
-            infile.close()
-
     def save(self, path_file_name):
         with open(f"{path_file_name}", "w", encoding="utf-8") as infile:
             infile.write(json.dumps([dict(x) for x in self.users]))
+            infile.close()
+
+    def load(self, path_file_name):
+        with open(f"{path_file_name}", "r", encoding="utf-8") as infile:
+            self.users = json.loads(infile.read())
             infile.close()
 
     def create_user(self, name, email, password):
@@ -156,3 +156,4 @@ class Users:
             return False
         self.users.pop(user)
         return True
+

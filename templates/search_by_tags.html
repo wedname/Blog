@@ -25,54 +25,6 @@
 				</ul>
 			</nav>
 
-		<!-- Banner -->
-			<section class="banner full">
-				<article>
-					<img src="static/images/slide01.jpg" alt="" />
-					<div class="inner">
-						<header>
-							<p>A free responsive web site template by <a href="https://templated.co">TEMPLATED</a></p>
-							<h2>Hielo</h2>
-						</header>
-					</div>
-				</article>
-				<article>
-					<img src="static/images/slide02.jpg" alt="" />
-					<div class="inner">
-						<header>
-							<p>Lorem ipsum dolor sit amet nullam feugiat</p>
-							<h2>Magna etiam</h2>
-						</header>
-					</div>
-				</article>
-				<article>
-					<img src="static/images/slide03.jpg"  alt="" />
-					<div class="inner">
-						<header>
-							<p>Sed cursus aliuam veroeros lorem ipsum nullam</p>
-							<h2>Tempus dolor</h2>
-						</header>
-					</div>
-				</article>
-				<article>
-					<img src="static/images/slide04.jpg"  alt="" />
-					<div class="inner">
-						<header>
-							<p>Adipiscing lorem ipsum feugiat sed phasellus consequat</p>
-							<h2>Etiam feugiat</h2>
-						</header>
-					</div>
-				</article>
-				<article>
-					<img src="static/images/slide05.jpg"  alt="" />
-					<div class="inner">
-						<header>
-							<p>Ipsum dolor sed magna veroeros lorem ipsum</p>
-							<h2>Lorem adipiscing</h2>
-						</header>
-					</div>
-				</article>
-			</section>
 
 		<section id="search_for_tags">
 			<div id="tags">
@@ -90,7 +42,7 @@
 				<div class="inner">
 					<div class="grid-style">
 
-						{% for i in range(articles | length) %}
+						{% for i in range(articles_by_tag | length) %}
 						<div>
 							<div class="box">
 								<div class="image fit">
@@ -98,13 +50,13 @@
 								</div>
 								<div class="content">
 									<header class="align-center">
-										<p>{{ articles[i].author }}</p>
-										<h2>{{ articles[i].name }}</h2>
+										<p>{{ articles_by_tag[i].author }}</p>
+										<h2>{{ articles_by_tag[i].name }}</h2>
 									</header>
-									<span class="view-count">Number of views: {{ articles[i].views_count }}</span>
-									<p>{{ articles[i].get_short_description() }}</p>
-									{% for j in range(articles[i].tags | length) %}
-											<a href="/article/{{ articles[i].tags[j] }}">{{ articles[i].tags[j] }}</a>
+									<span class="view-count">Number of views: {{ articles_by_tag[i].views_count }}</span>
+									<p>{{ articles_by_tag[i].get_short_description() }}</p>
+									{% for j in range(articles_by_tag[i].tags | length) %}
+											<a href="/article/{{ articles[i].tags[j] }}">{{ articles_by_tag[i].tags[j] }}</a>
 									{% endfor %}
 									<footer class="align-center">
 										<a href="/article/{{ articles[i].id }}" class="button alt">Read More</a>
