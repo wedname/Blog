@@ -1,3 +1,4 @@
+import json
 from datetime import date
 
 
@@ -49,7 +50,7 @@ class Post:
 
     @name.setter
     def name(self, value):
-        if isinstance(value, str):
+        if isinstance(value, str) and 1 < len(value.strip()) < 40:
             self._name = value
         else:
             raise ValueError('name must be a string')
@@ -60,7 +61,7 @@ class Post:
 
     @description.setter
     def description(self, value):
-        if isinstance(value, str):
+        if isinstance(value, str) and len(value.strip()) > 1:
             self._description = value
         else:
             raise ValueError('description must be a string')
@@ -83,15 +84,47 @@ class Post:
         else:
             return data
 
+    def __dict__(self):
+        return {
+            'id': self.id,
+            'author': self.author,
+            'name': self.name,
+            'description': self.description,
+            'views_count': self.views_count,
+            'current date': f'{self.current_date}',
+            'tags': self.tags
+                }
+
 
 class Blog:
 
-    def __init__(self):
+    def __init__(self, path_file_name):
         self.posts_list = []
+        self.path_file_name = path_file_name
+        self.load(path_file_name)
+
+    def save(self, path_file_name):
+        with open(f"{path_file_name}", "w", encoding="utf-8") as infile:
+            json_posts = json.dumps([x.__dict__() for x in self.posts_list])
+            infile.write(json_posts)
+            infile.close()
+
+    def load(self, path_file_name):
+        with open(f"{path_file_name}", "r", encoding="utf-8") as infile:
+            dict_of_posts = json.loads(infile.read())
+            infile.close()
+            self.posts_list = [Post(**x) for x in dict_of_posts]
 
     def add_post(self, author: str, value_name: str, value_description: str, tags: str) -> object:
         tags = tags.split()
-        return self.posts_list.append(Post(len(self.posts_list)+1, author, value_name, value_description, tags))
+        try:
+            post = Post(len(self.posts_list) + 1, author, value_name, value_description, tags)
+            self.posts_list.append(post)
+        except ValueError:
+            print("Ошибка")
+            return False
+        self.save(self.path_file_name)
+        return self.posts_list
 
     def edit_post(self, value, value_author: str, value_name: str, value_description: str, tags: str) -> list:
         for i in range(0, len(self.posts_list)):
@@ -119,3 +152,6 @@ class Blog:
                 return self.posts_list[i]
         else:
             ValueError("No such item!")
+
+    def __del__(self):
+        self.save(self.path_file_name)

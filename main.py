@@ -48,10 +48,11 @@ app = Flask(__name__)
 ath_user = None
 ath = False
 
-blog = Blog()
+blog = Blog('./articles.json')
 articles = blog.posts_list
 
 users = Users('./users.json')
+
 
 blog.add_post(
     'wedname',
